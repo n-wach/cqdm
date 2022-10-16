@@ -1,16 +1,18 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import sys
-from os import path
+from distutils.core import setup, Extension
 
-from setuptools import setup
+module1 = Extension(
+    "tqdmc",
+    define_macros=[("MAJOR_VERSION", "1"), ("MINOR_VERSION", "0")],
+    include_dirs=["/usr/local/include"],
+    libraries=["tcl83"],
+    library_dirs=["/usr/local/lib"],
+    sources=["tqdm.c"],
+)
 
-src_dir = path.abspath(path.dirname(__file__))
-if sys.argv[1].lower().strip() == 'make':  # exec Makefile commands
-    import pymake
-    fpath = path.join(src_dir, 'Makefile')
-    pymake.main(['-f', fpath] + sys.argv[2:])
-    # Stop to avoid setup.py raising non-standard command error
-    sys.exit(0)
-
-setup(use_scm_version=True)
+setup(
+    name="tqdmc",
+    version="1.0",
+    description="The popular tqdm library, accelerated with C bindings",
+    url="https://github.com/n-wach/tqdm-c",
+    ext_modules=[module1],
+)
