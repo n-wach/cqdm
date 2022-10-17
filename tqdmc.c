@@ -56,6 +56,9 @@ yielder_new(PyTypeObject *type, PyObject *args, PyObject *kwargs)
         return NULL;
 
     PyObject *iterable = PyObject_GetIter(obj);
+    if (!iterable)
+        return NULL;
+
     Py_INCREF(iterable);
     yielder->iterable = iterable;
 
