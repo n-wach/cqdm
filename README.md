@@ -5,6 +5,7 @@ A rewrite of tqdm as a CPython C extension.
 ## Running
 
 1. Create a fresh `venv`
-2. Run `python setup.py build`
-3. Run `python setup.py install`
-4. Run `python scratch.py`
+2. Install `tqdm` with `pip install tqdm`
+3. Build the C-extension with `python setup.py build`
+4. Install it with `python setup.py install`
+5. Run the demo with `python scratch.py`
