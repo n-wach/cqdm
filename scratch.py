@@ -3,6 +3,7 @@ import tqdm
 import tqdm_base
 
 import timeit
+import time
 
 
 def test_nop(n, q):
@@ -38,7 +39,7 @@ def test_tqdmc_yielder(n, q):
         for i in tqdmc.yielder(range(_n)):
             pass
     avg_time = timeit.timeit(lambda: loop(n), number=q)
-    print(f"tqdm-c@{n}: {avg_time} seconds")
+    print(f"tqdm-yielder@{n}: {avg_time} seconds")
     return avg_time
 
 
@@ -57,7 +58,8 @@ def test_tqdmc_tqdmiter(n, q):
     # our hacky implementation
     def loop(_n):
         total = 0
-        for i in tqdm_base.tqdm(range(_n)):
+        bar = tqdm_base.tqdm(range(_n))
+        for i in iter(bar):
             pass
     avg_time = timeit.timeit(lambda: loop(n), number=q)
     print(f"tqdm-c@{n}: {avg_time} seconds")

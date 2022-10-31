@@ -252,32 +252,60 @@ tqdmciter_next(TqdmCIterState *tqdmciter)
     PyObject *item = PyIter_Next(tqdmciter->iter);
     if(item == NULL) {
         // finally:
+        PyObject *n = PyLong_FromLong(tqdmciter->n);
+        PyObject_SetAttrString(tqdmciter->tqdm, "n", n);
 
+        PyObject *close = PyObject_GetAttrString(tqdmciter->tqdm, "close");
+        PyObject_CallNoArgs(close);
         return item;
     }
 
     tqdmciter->n++;
+    //printf("tqdm.n = %ld\n", tqdmciter->n);
 
-    // TODO: replicate python code here
+    PyObject *miniters = PyObject_GetAttrString(tqdmciter->tqdm, "miniters");
+    if (!miniters) {
+        printf("null miniters\n");
+        return NULL;
+    }
+    long miniters_;
+    if(PyLong_Check(miniters)) {
+        miniters_ = PyLong_AsLong(miniters);
+    } else if(PyFloat_Check(miniters)) {
+        miniters_ = (long) PyFloat_AsDouble(miniters);
+    } else {
+        printf("bad miniters\n");
+        return NULL;
+    }
 
-    PyObject *args = Py_BuildValue("(i)", 1);
-    PyObject_Call(tqdmciter->update, args, NULL);
-//
-//    long miniters =
-//    if(tqdmciter->n - tqdmciter->last_print_n >= ) {
-//
-//    }
-//
-//    PyObject *last_print_t = PyObject_GetAttrString(tqdm, "last_print_t");
-//    if (!last_print_t || PyFloat_Check(last_print_t));
-//        return NULL;
-//    tqdmciter->last_print_t = PyFloat_AsDouble(last_print_t);
-//
-//    PyObject *last_print_n = PyObject_GetAttrString(tqdm, "last_print_n");
-//    if (!last_print_n || PyLong_Check(last_print_n));
-//        return NULL;
-//    tqdmciter->last_print_n = PyLong_AsLong(last_print_n);
-//
+    long dn = tqdmciter->n - tqdmciter->last_print_n;
+    if(dn >= miniters_) {
+        struct timespec ts;
+        clock_gettime(CLOCK_REALTIME, &ts);
+        double cur_t = ts.tv_sec + (ts.tv_nsec * 1e-9);
+        if((cur_t - tqdmciter->last_print_t) >= tqdmciter->mininterval && cur_t >= tqdmciter->min_start_t) {
+
+        //printf("Call: tqdm.update(%ld - %ld = %ld)\n", tqdmciter->n, tqdmciter->last_print_n, dn);
+        PyObject *args = Py_BuildValue("(i)", dn);
+        PyObject_Call(tqdmciter->update, args, NULL);
+
+        PyObject *last_print_t = PyObject_GetAttrString(tqdmciter->tqdm, "last_print_t");
+        if (!last_print_t || !PyFloat_Check(last_print_t)) {
+
+        printf("bad last_print_t\n");
+            return NULL;
+            }
+        tqdmciter->last_print_t = PyFloat_AsDouble(last_print_t);
+        //printf("tqdm.last_print_t = %f\n", tqdmciter->last_print_t);
+
+        PyObject *last_print_n = PyObject_GetAttrString(tqdmciter->tqdm, "last_print_n");
+        if (!last_print_n || !PyLong_Check(last_print_n))
+            return NULL;
+        tqdmciter->last_print_n = PyLong_AsLong(last_print_n);
+        //printf("tqdm.last_print_n = %ld\n", tqdmciter->last_print_n);
+        }
+    }
+
     return item;
 }
 
