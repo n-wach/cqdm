@@ -5,6 +5,7 @@ import tqdm_base
 import timeit
 import time
 
+import matplotlib.pyplot as plt
 
 def test_nop(n, q):
     # a boring loop, doing nothing
@@ -65,16 +66,55 @@ def test_tqdmc_tqdmiter(n, q):
     print(f"tqdm-c@{n}: {avg_time} seconds")
     return avg_time
 
-
+MAX_ITER = 10
 N = 1_000_000
 Q = 10
 
-test_nop(N, Q)
+nop = []
+dumb = []
+yielder = []
+tqdm_orig = []
+tqdm_iter = []
+iterations = []
 
-test_dumb(N, Q)
-test_tqdmc_yielder(N, Q)
+for i in range(MAX_ITER):
+    inc = i+1
+    nop.append(test_nop(N*inc, Q))
+
+    dumb.append(test_dumb(N*inc, Q))
+    yielder.append(test_tqdmc_yielder(N*inc, Q))
+
+    tqdm_orig.append(test_tqdm(N*inc, Q))
+    tqdm_iter.append(test_tqdmc_tqdmiter(N*inc, Q))
+
+    iterations.append(N*inc)
 
 a = test_tqdm(N, Q)
 b = test_tqdmc_tqdmiter(N, Q)
-
 print(f"Speedup: {a / b:.3}x")
+
+fig, (ax1, ax2) = plt.subplots(1, 2)
+
+ax1.set_title('Time Taken as Iterations Increase For Different Operations')
+ax1.set_xlabel('number of iterations')
+ax1.set_ylabel('time in seconds')
+
+ax1.plot(iterations, nop, 'ko', linewidth=2, label='no operations')
+ax1.plot(iterations, dumb, 'bo', linewidth=2, label='basic iterable wrapper')
+ax1.plot(iterations, yielder, 'yo', linewidth=2, label='c basic iterable')
+ax1.plot(iterations, tqdm_orig, 'ro', linewidth=2, label='original tqdm')
+ax1.plot(iterations, tqdm_iter, 'go', linewidth=2, label='c tqdm')
+
+improvement = []
+for i in range(MAX_ITER):
+    improvement.append(tqdm_orig[i]/tqdm_iter[i])
+
+ax2.set_title('Tqdm With C Speedup Compared to Tqdm')
+ax2.set_xlabel('iterations')
+ax2.set_ylabel('improvement (tqdm time/tqdm-c time)')
+
+ax2.plot(iterations, improvement)
+
+legend = ax1.legend(loc='upper left')
+
+plt.show()

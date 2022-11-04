@@ -6,9 +6,11 @@ A rewrite of tqdm as a CPython C extension.
 
 1. Create a fresh `venv`
 2. Install `tqdm` with `pip install tqdm`
-3. Build the C-extension with `python setup.py build`
-4. Install it with `python setup.py install`
-5. Run the demo with `python scratch.py`
+3. Install `matplotlib` with `python3 -m pip install matplotlib`
+4. If on linux, then it might be necessary to install a gui backend for plt.show() to function. Do so with `sudo apt-get install python3-tk`
+5. Build the C-extension with `python setup.py build`
+6. Install it with `python setup.py install`
+7. Run the demo with `python scratch.py`
 
 ## TODO
 
