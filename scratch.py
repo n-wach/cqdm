@@ -66,9 +66,10 @@ def test_tqdmc_tqdmiter(n, q):
     print(f"tqdm-c@{n}: {avg_time} seconds")
     return avg_time
 
+
 MAX_ITER = 10
-N = 1_000_000
-Q = 10
+N = 10_000
+Q = 500
 
 nop = []
 dumb = []
@@ -93,17 +94,17 @@ a = test_tqdm(N, Q)
 b = test_tqdmc_tqdmiter(N, Q)
 print(f"Speedup: {a / b:.3}x")
 
-fig, (ax1, ax2) = plt.subplots(1, 2)
+fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(8, 8))
 
 ax1.set_title('Time Taken as Iterations Increase For Different Operations')
 ax1.set_xlabel('number of iterations')
 ax1.set_ylabel('time in seconds')
 
-ax1.plot(iterations, nop, 'ko', linewidth=2, label='no operations')
-ax1.plot(iterations, dumb, 'bo', linewidth=2, label='basic iterable wrapper')
-ax1.plot(iterations, yielder, 'yo', linewidth=2, label='c basic iterable')
-ax1.plot(iterations, tqdm_orig, 'ro', linewidth=2, label='original tqdm')
-ax1.plot(iterations, tqdm_iter, 'go', linewidth=2, label='c tqdm')
+ax1.plot(iterations, nop, 'k-', linewidth=2, label='no operations')
+ax1.plot(iterations, dumb, 'b-', linewidth=2, label='basic iterable wrapper')
+ax1.plot(iterations, yielder, 'y-', linewidth=2, label='c basic iterable')
+ax1.plot(iterations, tqdm_orig, 'r-', linewidth=2, label='original tqdm')
+ax1.plot(iterations, tqdm_iter, 'g-', linewidth=2, label='c tqdm')
 
 improvement = []
 for i in range(MAX_ITER):
@@ -112,6 +113,7 @@ for i in range(MAX_ITER):
 ax2.set_title('Tqdm With C Speedup Compared to Tqdm')
 ax2.set_xlabel('iterations')
 ax2.set_ylabel('improvement (tqdm time/tqdm-c time)')
+ax2.set_ylim(1.0, 3.5)
 
 ax2.plot(iterations, improvement)
 
