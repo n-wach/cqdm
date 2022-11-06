@@ -123,6 +123,7 @@ typedef struct {
   double last_print_t;
   long last_print_n;
   double min_start_t;
+  long miniters;
   long n;
   PyObject *update;
 } TqdmCIterState;
@@ -179,6 +180,20 @@ static PyObject *tqdmciter_new(PyTypeObject *type, PyObject *args,
   tqdmciter->min_start_t = PyLong_AsLong(n);
 
   tqdmciter->update = PyObject_GetAttrString(tqdm, "update");
+
+  PyObject *miniters = PyObject_GetAttrString(tqdmciter->tqdm, "miniters");
+  if (!miniters) {
+    printf("null miniters\n");
+    return NULL;
+  }
+  if (PyLong_Check(miniters)) {
+    tqdmciter->miniters = PyLong_AsLong(miniters);
+  } else if (PyFloat_Check(miniters)) {
+    tqdmciter->miniters = (long)PyFloat_AsDouble(miniters);
+  } else {
+    printf("bad miniters\n");
+    return NULL;
+  }
 
   /* python tqdm.__iter__()
   if self.disable:
@@ -239,23 +254,8 @@ static PyObject *tqdmciter_next(TqdmCIterState *tqdmciter) {
   tqdmciter->n++;
   // printf("tqdm.n = %ld\n", tqdmciter->n);
 
-  PyObject *miniters = PyObject_GetAttrString(tqdmciter->tqdm, "miniters");
-  if (!miniters) {
-    printf("null miniters\n");
-    return NULL;
-  }
-  long miniters_;
-  if (PyLong_Check(miniters)) {
-    miniters_ = PyLong_AsLong(miniters);
-  } else if (PyFloat_Check(miniters)) {
-    miniters_ = (long)PyFloat_AsDouble(miniters);
-  } else {
-    printf("bad miniters\n");
-    return NULL;
-  }
-
   long dn = tqdmciter->n - tqdmciter->last_print_n;
-  if (dn >= miniters_) {
+  if (dn >= tqdmciter->miniters) {
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
     double cur_t = ts.tv_sec + (ts.tv_nsec * 1e-9);
