@@ -157,8 +157,8 @@ static PyObject *cqdm_next(CqdmState *cqdm) {
   cqdm->n++;
 
   long dn = cqdm->n - cqdm->last_print_n;
-  // TODO: we don't check miniters attribute; it might've changed due to
-  // monitor.
+  // We don't need to check miniters attribute on the object.
+  // It was set because we overwrote __setattr__ to call cqdm_set_miniters().
   if (dn >= cqdm->miniters) {
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
@@ -189,56 +189,43 @@ static PyObject *cqdm_next(CqdmState *cqdm) {
   return item;
 }
 
-PyTypeObject PyCqdm_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0) "cqdm", /* tp_name */
-    sizeof(CqdmState),                             /* tp_basicsize */
-    0,                                             /* tp_itemsize */
-    (destructor)cqdm_dealloc,                      /* tp_dealloc */
-    0,                                             /* tp_print */
-    0,                                             /* tp_getattr */
-    0,                                             /* tp_setattr */
-    0,                                             /* tp_reserved */
-    0,                                             /* tp_repr */
-    0,                                             /* tp_as_number */
-    0,                                             /* tp_as_sequence */
-    0,                                             /* tp_as_mapping */
-    0,                                             /* tp_hash */
-    0,                                             /* tp_call */
-    0,                                             /* tp_str */
-    0,                                             /* tp_getattro */
-    0,                                             /* tp_setattro */
-    0,                                             /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,                            /* tp_flags */
-    0,                                             /* tp_doc */
-    0,                                             /* tp_traverse */
-    0,                                             /* tp_clear */
-    0,                                             /* tp_richcompare */
-    0,                                             /* tp_weaklistoffset */
-    PyObject_SelfIter,                             /* tp_iter */
-    (iternextfunc)cqdm_next,                       /* tp_iternext */
-    0,                                             /* tp_methods */
-    0,                                             /* tp_members */
-    0,                                             /* tp_getset */
-    0,                                             /* tp_base */
-    0,                                             /* tp_dict */
-    0,                                             /* tp_descr_get */
-    0,                                             /* tp_descr_set */
-    0,                                             /* tp_dictoffset */
-    0,                                             /* tp_init */
-    PyType_GenericAlloc,                           /* tp_alloc */
-    cqdm_new,                                      /* tp_new */
+static PyObject *cqdm_set_miniters(CqdmState *cqdm, PyObject *miniters) {
+  if(!miniters) {
+    return NULL;
+  }
+  if (PyLong_Check(miniters)) {
+    cqdm->miniters = PyLong_AsLong(miniters);
+  } else if (PyFloat_Check(miniters)) {
+    cqdm->miniters = (long)PyFloat_AsDouble(miniters);
+  } else {
+    return NULL;
+  }
+  Py_RETURN_NONE;
+}
+static PyMethodDef cqdm_methods[] = {
+    {"set_miniters", (PyCFunction) cqdm_set_miniters, METH_O,
+     "Set miniters (used by monitor thread)" },
+    {NULL}  /* Sentinel */
 };
 
-static PyMethodDef cqdmMethods[] = {
-    {NULL, NULL, 0, NULL} /* Sentinel */
+PyTypeObject PyCqdm_Type = {
+    PyVarObject_HEAD_INIT(&PyType_Type, 0)
+    .tp_name = "cqdm",
+    .tp_basicsize = sizeof(CqdmState),
+    .tp_dealloc = (destructor)cqdm_dealloc,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_iter = PyObject_SelfIter,
+    .tp_iternext = (iternextfunc)cqdm_next,
+    .tp_methods = cqdm_methods,
+    .tp_alloc = PyType_GenericAlloc,
+    .tp_new = cqdm_new,
 };
 
 static struct PyModuleDef cqdmmodule = {
-    PyModuleDef_HEAD_INIT, "cqdm_native", /* name of module */
-    NULL, /* module documentation, may be NULL */
-    -1,   /* size of per-interpreter state of the module,
-             or -1 if the module keeps state in global variables. */
-    cqdmMethods};
+    PyModuleDef_HEAD_INIT,
+    .m_name = "cqdm_native",
+    .m_size = -1,
+};
 
 PyMODINIT_FUNC PyInit_cqdm_native(void) {
   PyObject *m;
