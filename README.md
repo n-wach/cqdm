@@ -1,6 +1,6 @@
 # cqdm
 
-A drop-in replacement for the popular tqdm library, accelerated with C bindings.
+A drop-in replacement for the popular [tqdm library](https://github.com/tqdm/tqdm), accelerated with C bindings.
 
 ## Usage
 
