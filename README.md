@@ -1,6 +1,6 @@
 # cqdm
 
-A rewrite of tqdm as a CPython C extension.
+A drop-in replacement for the popular tqdm library, accelerated with C bindings.
 
 ## Usage
 
