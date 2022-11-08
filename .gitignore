@@ -5,6 +5,7 @@
 /*.egg*/
 /build/
 /dist/
+/wheelhouse/
 
 # Dev
 .idea/
