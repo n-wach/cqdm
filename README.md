@@ -4,6 +4,8 @@ A drop-in replacement for the popular [tqdm library](https://github.com/tqdm/tqd
 
 ## Usage
 
+Install with `pip install cqdm`.
+
 Replace usages of `tqdm.tqdm` with `cqdm.cqdm`. This can be done
 succinctly by changing your `import` statement:
 
