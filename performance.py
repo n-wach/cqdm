@@ -1,5 +1,6 @@
 import cqdm
 import tqdm
+import dis
 
 import timeit
 import time
@@ -87,5 +88,8 @@ ax2.set_ylim(1.0, 4.0)
 ax2.plot(iterations, improvement)
 
 legend = ax1.legend(loc="upper left")
+
+dis.dis(test_cqdm)
+dis.dis(test_tqdm)
 
 plt.show()
