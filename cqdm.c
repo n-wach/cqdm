@@ -1,7 +1,7 @@
 #include <Python.h>
 
 typedef struct {
-  PyObject_HEAD Py_ssize_t seq_index, enum_index;
+  PyObject_HEAD;
   PyObject *tqdm_obj;
   PyObject *iterator;
   PyObject *update_func;
@@ -99,38 +99,6 @@ static PyObject *cqdm_new(PyTypeObject *type, PyObject *args,
   cqdm->update_func = update_func;
 
   return (PyObject *)cqdm;
-
-  /* python tqdm.__iter__()
-  if self.disable:
-      for obj in iterable:
-          yield obj
-      return
-
-  mininterval = self.mininterval
-  last_print_t = self.last_print_t
-  last_print_n = self.last_print_n
-  min_start_t = self.start_t + self.delay
-  n = self.n
-  time = self._time
-
-  try:
-      for obj in iterable:
-          yield obj
-          # Update and possibly print the progressbar.
-          # Note: does not call self.update(1) for speed optimisation.
-          n += 1
-
-          if n - last_print_n >= self.miniters:
-              cur_t = time()
-              dt = cur_t - last_print_t
-              if dt >= mininterval and cur_t >= min_start_t:
-                  self.update(n - last_print_n)
-                  last_print_n = self.last_print_n
-                  last_print_t = self.last_print_t
-  finally:
-      self.n = n
-      self.close()
-  */
 }
 
 static void cqdm_dealloc(CqdmState *cqdm) {
@@ -190,7 +158,7 @@ static PyObject *cqdm_next(CqdmState *cqdm) {
 }
 
 static PyObject *cqdm_set_miniters(CqdmState *cqdm, PyObject *miniters) {
-  if(!miniters) {
+  if (!miniters) {
     return NULL;
   }
   if (PyLong_Check(miniters)) {
@@ -203,9 +171,9 @@ static PyObject *cqdm_set_miniters(CqdmState *cqdm, PyObject *miniters) {
   Py_RETURN_NONE;
 }
 static PyMethodDef cqdm_methods[] = {
-    {"set_miniters", (PyCFunction) cqdm_set_miniters, METH_O,
-     "Set miniters (used by monitor thread)" },
-    {NULL}  /* Sentinel */
+    {"set_miniters", (PyCFunction)cqdm_set_miniters, METH_O,
+     "Set miniters (used by monitor thread)"},
+    {NULL} /* Sentinel */
 };
 
 PyTypeObject PyCqdm_Type = {
@@ -231,11 +199,13 @@ PyMODINIT_FUNC PyInit_cqdm_native(void) {
   PyObject *m;
 
   m = PyModule_Create(&cqdmmodule);
-  if (m == NULL)
+  if (m == NULL) {
     return NULL;
+  }
 
-  if (PyType_Ready(&PyCqdm_Type) < 0)
+  if (PyType_Ready(&PyCqdm_Type) < 0) {
     return NULL;
+  }
   Py_INCREF((PyObject *)&PyCqdm_Type);
   PyModule_AddObject(m, "cqdm", (PyObject *)&PyCqdm_Type);
 
