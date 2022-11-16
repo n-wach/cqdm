@@ -14,9 +14,10 @@ def test_nop(n, q):
         for i in range(_n):
             pass
 
-    avg_time = timeit.timeit(lambda: loop(n), number=q)
-    print(f"nop@{n}: {avg_time} seconds")
-    return avg_time
+    total = timeit.timeit(lambda: loop(n), number=q)
+    avg = total / q
+    print(f"nop@{n}: {avg} seconds")
+    return avg
 
 
 def test_tqdm(n, q):
@@ -26,9 +27,10 @@ def test_tqdm(n, q):
         for i in tqdm.tqdm(range(_n)):
             pass
 
-    avg_time = timeit.timeit(lambda: loop(n), number=q)
-    print(f"tqdm@{n}: {avg_time} seconds")
-    return avg_time
+    total = timeit.timeit(lambda: loop(n), number=q)
+    avg = total / q
+    print(f"tqdm@{n}: {avg} seconds")
+    return avg
 
 
 def test_cqdm(n, q):
@@ -38,9 +40,10 @@ def test_cqdm(n, q):
         for i in cqdm.cqdm(range(_n)):
             pass
 
-    avg_time = timeit.timeit(lambda: loop(n), number=q)
-    print(f"cqdm@{n}: {avg_time} seconds")
-    return avg_time
+    total = timeit.timeit(lambda: loop(n), number=q)
+    avg = total / q
+    print(f"cqdm@{n}: {avg} seconds")
+    return avg
 
 
 MAX_ITER = 10
@@ -60,9 +63,6 @@ for i in range(1, MAX_ITER + 1):
 
     iterations.append(N * i)
 
-a = test_tqdm(N, Q)
-b = test_cqdm(N, Q)
-print(f"Speedup: {a / b:.3}x")
 
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(8, 8))
 
@@ -70,9 +70,9 @@ ax1.set_title("Total Overhead for Large Iterables")
 ax1.set_xlabel("Iterations")
 ax1.set_ylabel("Total Overhead (seconds)")
 
-ax1.plot(iterations, nop_times, "k-", linewidth=2, label="no bar")
 ax1.plot(iterations, tqdm_times, "r-", linewidth=2, label="tqdm")
 ax1.plot(iterations, cqdm_times, "g-", linewidth=2, label="cqdm")
+ax1.plot(iterations, nop_times, "k-", linewidth=2, label="no bar")
 
 improvement = []
 for i in range(MAX_ITER):
