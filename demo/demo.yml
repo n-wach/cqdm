@@ -1,0 +1,296 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /tmp
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 80
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 10
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: solid
+    title: null
+    style:
+      boxShadow: none
+      margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: bar
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 300
+    content: "\e[01;32mcqdm-demo@Desktop\e[00m:\e[01;34m/tmp\e[00m$ "
+  - delay: 100
+    content: "\e[7mpython ~/projects/cqdm/demo.py\e[27m"
+  - delay: 500
+    content: "\r\e[24Cpython ~/projects/cqdm/demo.py\r\n\e[?2004l\r"
+  - delay: 30
+    content: "Iterating with tqdm:\r\n"
+  - delay: 21
+    content: "\r  0%|                                              | 0/50000000 [00:00<?, ?it/s]"
+  - delay: 100
+    content: "\r  1%|▎                           | 515789/50000000 [00:00<00:09, 5157501.43it/s]"
+  - delay: 100
+    content: "\r  2%|▋                          | 1198494/50000000 [00:00<00:07, 6139346.55it/s]"
+  - delay: 100
+    content: "\r  4%|█                          | 1919532/50000000 [00:00<00:07, 6628229.65it/s]"
+  - delay: 100
+    content: "\r  5%|█▍                         | 2658849/50000000 [00:00<00:06, 6930048.26it/s]"
+  - delay: 100
+    content: "\r  7%|█▊                         | 3409241/50000000 [00:00<00:06, 7136831.84it/s]"
+  - delay: 119
+    content: "\r  8%|██▏                        | 4122925/50000000 [00:00<00:06, 6702347.70it/s]"
+  - delay: 100
+    content: "\r 10%|██▋                        | 4869502/50000000 [00:00<00:06, 6941354.71it/s]"
+  - delay: 100
+    content: "\r 11%|███                        | 5611307/50000000 [00:00<00:06, 7088616.26it/s]"
+  - delay: 100
+    content: "\r 13%|███▍                       | 6372567/50000000 [00:00<00:06, 7249030.73it/s]"
+  - delay: 100
+    content: "\r 14%|███▊                       | 7138775/50000000 [00:01<00:05, 7374666.85it/s]"
+  - delay: 100
+    content: "\r 16%|████▎                      | 7907345/50000000 [00:01<00:05, 7468820.33it/s]"
+  - delay: 100
+    content: "\r 17%|████▋                      | 8677642/50000000 [00:01<00:05, 7539459.61it/s]"
+  - delay: 100
+    content: "\r 19%|█████                      | 9453021/50000000 [00:01<00:05, 7603982.12it/s]"
+  - delay: 100
+    content: "\r 20%|█████▎                    | 10233122/50000000 [00:01<00:05, 7663204.00it/s]"
+  - delay: 100
+    content: "\r 22%|█████▋                    | 11010613/50000000 [00:01<00:05, 7696683.04it/s]"
+  - delay: 100
+    content: "\r 24%|██████▏                   | 11789694/50000000 [00:01<00:04, 7724854.52it/s]"
+  - delay: 100
+    content: "\r 25%|██████▌                   | 12573280/50000000 [00:01<00:04, 7758091.60it/s]"
+  - delay: 100
+    content: "\r 27%|██████▉                   | 13352444/50000000 [00:01<00:04, 7768055.24it/s]"
+  - delay: 100
+    content: "\r 28%|███████▎                  | 14135769/50000000 [00:01<00:04, 7787509.69it/s]"
+  - delay: 100
+    content: "\r 30%|███████▊                  | 14919880/50000000 [00:02<00:04, 7803514.33it/s]"
+  - delay: 100
+    content: "\r 31%|████████▏                 | 15702701/50000000 [00:02<00:04, 7810832.17it/s]"
+  - delay: 100
+    content: "\r 33%|████████▌                 | 16488613/50000000 [00:02<00:04, 7825222.48it/s]"
+  - delay: 100
+    content: "\r 35%|████████▉                 | 17275182/50000000 [00:02<00:04, 7837254.20it/s]"
+  - delay: 101
+    content: "\r 36%|█████████▍                | 18058932/50000000 [00:02<00:04, 7832511.92it/s]"
+  - delay: 99
+    content: "\r 38%|█████████▊                | 18842201/50000000 [00:02<00:03, 7832259.57it/s]"
+  - delay: 100
+    content: "\r 39%|██████████▏               | 19627615/50000000 [00:02<00:03, 7838700.69it/s]"
+  - delay: 100
+    content: "\r 41%|██████████▌               | 20412326/50000000 [00:02<00:03, 7841118.64it/s]"
+  - delay: 100
+    content: "\r 42%|███████████               | 21197978/50000000 [00:02<00:03, 7845622.72it/s]"
+  - delay: 100
+    content: "\r 44%|███████████▍              | 21984205/50000000 [00:02<00:03, 7850511.86it/s]"
+  - delay: 100
+    content: "\r 46%|███████████▊              | 22770034/50000000 [00:03<00:03, 7852751.85it/s]"
+  - delay: 100
+    content: "\r 47%|████████████▏             | 23556997/50000000 [00:03<00:03, 7857710.39it/s]"
+  - delay: 102
+    content: "\r 49%|████████████▋             | 24342770/50000000 [00:03<00:03, 7833610.15it/s]"
+  - delay: 100
+    content: "\r 50%|█████████████             | 25126150/50000000 [00:03<00:03, 7822720.99it/s]"
+  - delay: 100
+    content: "\r 52%|█████████████▍            | 25910230/50000000 [00:03<00:03, 7827993.67it/s]"
+  - delay: 100
+    content: "\r 53%|█████████████▉            | 26693041/50000000 [00:03<00:02, 7822724.68it/s]"
+  - delay: 102
+    content: "\r 55%|██████████████▎           | 27475322/50000000 [00:03<00:02, 7792417.49it/s]"
+  - delay: 100
+    content: "\r 57%|██████████████▋           | 28255285/50000000 [00:03<00:02, 7794452.82it/s]"
+  - delay: 104
+    content: "\r 58%|███████████████           | 29034751/50000000 [00:03<00:02, 7687433.11it/s]"
+  - delay: 100
+    content: "\r 60%|███████████████▌          | 29813854/50000000 [00:03<00:02, 7718023.62it/s]"
+  - delay: 100
+    content: "\r 61%|███████████████▉          | 30594731/50000000 [00:04<00:02, 7744896.17it/s]"
+  - delay: 103
+    content: "\r 63%|████████████████▎         | 31369424/50000000 [00:04<00:02, 7676359.78it/s]"
+  - delay: 100
+    content: "\r 64%|████████████████▋         | 32146846/50000000 [00:04<00:02, 7705287.72it/s]"
+  - delay: 100
+    content: "\r 66%|█████████████████         | 32925412/50000000 [00:04<00:02, 7729095.79it/s]"
+  - delay: 100
+    content: "\r 67%|█████████████████▌        | 33703169/50000000 [00:04<00:02, 7743434.18it/s]"
+  - delay: 100
+    content: "\r 69%|█████████████████▉        | 34481386/50000000 [00:04<00:02, 7754877.46it/s]"
+  - delay: 100
+    content: "\r 71%|██████████████████▎       | 35259448/50000000 [00:04<00:01, 7762450.10it/s]"
+  - delay: 100
+    content: "\r 72%|██████████████████▋       | 36039697/50000000 [00:04<00:01, 7774315.32it/s]"
+  - delay: 104
+    content: "\r 74%|███████████████████▏      | 36817175/50000000 [00:04<00:01, 7699134.95it/s]"
+  - delay: 100
+    content: "\r 75%|███████████████████▌      | 37594994/50000000 [00:04<00:01, 7722529.11it/s]"
+  - delay: 100
+    content: "\r 77%|███████████████████▉      | 38373124/50000000 [00:05<00:01, 7739946.27it/s]"
+  - delay: 100
+    content: "\r 78%|████████████████████▎     | 39152171/50000000 [00:05<00:01, 7754909.93it/s]"
+  - delay: 100
+    content: "\r 80%|████████████████████▊     | 39929086/50000000 [00:05<00:01, 7759034.38it/s]"
+  - delay: 100
+    content: "\r 81%|█████████████████████▏    | 40709433/50000000 [00:05<00:01, 7772209.00it/s]"
+  - delay: 100
+    content: "\r 83%|█████████████████████▌    | 41487052/50000000 [00:05<00:01, 7773276.22it/s]"
+  - delay: 100
+    content: "\r 85%|█████████████████████▉    | 42266392/50000000 [00:05<00:00, 7779182.03it/s]"
+  - delay: 100
+    content: "\r 86%|██████████████████████▍   | 43050306/50000000 [00:05<00:00, 7797014.66it/s]"
+  - delay: 100
+    content: "\r 88%|██████████████████████▊   | 43830025/50000000 [00:05<00:00, 7794545.17it/s]"
+  - delay: 100
+    content: "\r 89%|███████████████████████▏  | 44612653/50000000 [00:05<00:00, 7803928.58it/s]"
+  - delay: 100
+    content: "\r 91%|███████████████████████▌  | 45395858/50000000 [00:05<00:00, 7812218.59it/s]"
+  - delay: 106
+    content: "\r 92%|████████████████████████  | 46177087/50000000 [00:06<00:00, 7657951.65it/s]"
+  - delay: 100
+    content: "\r 94%|████████████████████████▍ | 46952835/50000000 [00:06<00:00, 7687260.80it/s]"
+  - delay: 100
+    content: "\r 95%|████████████████████████▊ | 47730700/50000000 [00:06<00:00, 7714281.76it/s]"
+  - delay: 100
+    content: "\r 97%|█████████████████████████▏| 48509918/50000000 [00:06<00:00, 7737358.29it/s]"
+  - delay: 100
+    content: "\r 99%|█████████████████████████▋| 49290485/50000000 [00:06<00:00, 7757631.88it/s]"
+  - delay: 91
+    content: "\r100%|██████████████████████████| 50000000/50000000 [00:06<00:00, 7655640.17it/s]\r\n"
+  - delay: 100
+    content: "That took 6.54 seconds\r\nIterating with cqdm:\r\n"
+  - delay: 100
+    content: "\r  0%|                                              | 0/50000000 [00:00<?, ?it/s]"
+  - delay: 100
+    content: "\r  3%|▊                         | 1446193/50000000 [00:00<00:03, 14458531.08it/s]"
+  - delay: 100
+    content: "\r  7%|█▊                        | 3401096/50000000 [00:00<00:02, 17450410.82it/s]"
+  - delay: 100
+    content: "\r 11%|██▊                       | 5458983/50000000 [00:00<00:02, 18876812.31it/s]"
+  - delay: 100
+    content: "\r 15%|███▉                      | 7556474/50000000 [00:00<00:02, 19703361.85it/s]"
+  - delay: 100
+    content: "\r 19%|█████                     | 9675826/50000000 [00:00<00:01, 20239002.33it/s]"
+  - delay: 100
+    content: "\r 24%|█████▉                   | 11816269/50000000 [00:00<00:01, 20633641.98it/s]"
+  - delay: 100
+    content: "\r 28%|██████▉                  | 13959964/50000000 [00:00<00:01, 20894666.41it/s]"
+  - delay: 100
+    content: "\r 32%|████████                 | 16118906/50000000 [00:00<00:01, 21114309.36it/s]"
+  - delay: 100
+    content: "\r 37%|█████████▏               | 18285857/50000000 [00:00<00:01, 21286425.51it/s]"
+  - delay: 100
+    content: "\r 41%|██████████▏              | 20453474/50000000 [00:01<00:01, 21405223.36it/s]"
+  - delay: 100
+    content: "\r 45%|███████████▎             | 22623422/50000000 [00:01<00:01, 21493862.12it/s]"
+  - delay: 100
+    content: "\r 50%|████████████▍            | 24796300/50000000 [00:01<00:01, 21563836.38it/s]"
+  - delay: 104
+    content: "\r 58%|██████████████▌          | 29109067/50000000 [00:01<00:00, 27808988.06it/s]"
+  - delay: 223
+    content: "\r 69%|█████████████████▎       | 34642432/50000000 [00:01<00:00, 26336541.30it/s]"
+  - delay: 249
+    content: "\r 80%|████████████████████     | 40002367/50000000 [00:01<00:00, 24249821.25it/s]"
+  - delay: 237
+    content: "\r 90%|██████████████████████▌  | 45046784/50000000 [00:02<00:00, 23140839.32it/s]"
+  - delay: 224
+    content: "\r100%|████████████████████████▉| 49853897/50000000 [00:02<00:00, 22548784.66it/s]"
+  - delay: 116
+    content: "\r100%|█████████████████████████| 50000000/50000000 [00:02<00:00, 21250074.48it/s]\r\n"
+  - delay: 10
+    content: "That took 2.15 seconds\r\nThat's a speed up of 3.04x\r\n"
+  - delay: 8000
+    content: "\r"
