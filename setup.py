@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="cqdm",
-    version="1.0.3",
+    version="1.0.4",
     description="A drop-in replacement for the popular tqdm library, accelerated with C bindings",
     long_description=long_description,
     long_description_content_type="text/markdown",
