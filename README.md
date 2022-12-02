@@ -59,9 +59,4 @@ To generate performance graphs:
 
 1. Install `matplotlib` with `python3 -m pip install matplotlib`
 2. If on linux, then it might be necessary to install a gui backend for `plt.show()` to function. Do so with `sudo apt-get install python3-tk`
-3. Generate the performance graph with `python performance.py`
-
-## TODO
-
-- Look into Python bytecode (compare `__iter__`s of `cqdm` vs `tqdm`)
-- Debugging/profiling C extensions
+3. Generate the performance graph with `python demo/performance.py`
