@@ -84,14 +84,14 @@ average = [average] * len(improvement)
 ax2.set_title("Speedup for Large Iterables")
 ax2.set_xlabel("Iterations")
 ax2.set_ylabel("Speedup (tqdm vs cqdm)")
-ax2.set_ylim(1.0, 4.0)
+ax2.set_ylim(1.0, 5.5)
 
 ax2.plot(iterations, improvement, color="#1f77b4")
 ax2.plot(iterations, average, ":", color="#1f77b4")
 
 legend = ax1.legend(loc="upper left")
 
-dis.dis(test_cqdm)
-dis.dis(test_tqdm)
+# dis.dis(test_cqdm)
+# dis.dis(test_tqdm)
 
 plt.show()

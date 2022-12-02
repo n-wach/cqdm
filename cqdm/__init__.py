@@ -10,9 +10,7 @@ class cqdm(tqdm.tqdm):
 
     def __iter__(self):
         if self.disable:
-            yield from self.iterable
-            return
+            return iter(self.iterable)
 
         self._cqdm = cqdm_native.cqdm(self)
-        yield from self._cqdm
-        del self._cqdm
+        return self._cqdm
